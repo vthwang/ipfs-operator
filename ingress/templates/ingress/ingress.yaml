@@ -9,6 +9,7 @@ spec:
   tls:
   - hosts:
     - ipfs.fishboneapps.com
+    - ipfs-gateway.fishboneapps.com
     secretName: fishboneapps-tls
   rules:
     - host: ipfs.fishboneapps.com
@@ -21,3 +22,13 @@ spec:
                 name: ipfs-ipfs-ipfs-cluster
                 port:
                   number: 5001
+    - host: ipfs-gateway.fishboneapps.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ipfs-ipfs-ipfs-cluster
+                port:
+                  number: 8080
