@@ -8,21 +8,11 @@ metadata:
 spec:
   tls:
   - hosts:
-    - ipfs.fishboneapps.com
-    - ipfs-gateway.fishboneapps.com
-    secretName: fishboneapps-tls
+    - ipfs.ic3.dev
+    - ipfs-api.ic3.dev
+    secretName: ic3-tls
   rules:
-    - host: ipfs.fishboneapps.com
-      http:
-        paths:
-          - pathType: Prefix
-            path: "/"
-            backend:
-              service:
-                name: ipfs-ipfs-ipfs-cluster
-                port:
-                  number: 5001
-    - host: ipfs-gateway.fishboneapps.com
+    - host: ipfs.ic3.dev
       http:
         paths:
           - pathType: Prefix
@@ -32,3 +22,13 @@ spec:
                 name: ipfs-ipfs-ipfs-cluster
                 port:
                   number: 8080
+    - host: ipfs-api.ic3.dev
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ipfs-ipfs-ipfs-cluster
+                port:
+                  number: 5001
