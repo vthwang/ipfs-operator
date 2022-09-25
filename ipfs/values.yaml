@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image: ipfs/go-ipfs:latest
+
+service:
+  type: ClusterIP
+  nameOverride: ""
+
+resources: {}
+
+nameOverride: ""
+
+persistence:
+  storageClass: "do-block-storage"
+  volumeSize: "20Gi"
