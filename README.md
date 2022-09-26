@@ -22,12 +22,18 @@
    ```
 4. Create auth secret for "ipfs-api" service. Check [Document](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/) for more information.
    - Generate password file
-     `htpasswd -c auth ic3`
+     ```
+     htpasswd -c auth ic3
+     ```
    - Create secret in the kubernetes cluster.
-     `kubectl create secret generic ipfs-auth --from-file=auth`
+     ```
+     kubectl create secret generic ipfs-auth --from-file=auth
+     ```
 5. Once the loadbalancer is created, setup DNS record, and point subdomain "ipfs" and "ipfs-api" to the IP of the loadbalancer.
 6. Install IPFS helm charts.
-   `make deploy`
+   ```
+   make deploy
+   ```
 ## IPFS Usage
 ### IPFS gateway
 1. IPFS gateway is a public service for everyone is accessible. Here is the [Reference](https://docs.ipfs.tech/reference/http/gateway/#trusted-vs-trustless).
