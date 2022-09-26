@@ -1,0 +1,12 @@
+controller:
+  config:
+    use-proxy-protocol: "true"
+    use-forwarded-headers: "true"
+  service:
+    annotations:
+      service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+      service.beta.kubernetes.io/do-loadbalancer-hostname: "lb.ic3.dev"
+    externalTrafficPolicy: "Cluster"
+
+tcp:
+  4001: "default/ipfs-ipfs:4001"

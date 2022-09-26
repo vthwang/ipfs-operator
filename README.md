@@ -1,23 +1,23 @@
 # ipfs-operator
 ## Installation
-### 1. Setup DNS record
-1. Point subdomain "ipfs" to the IP of loadbalancer.
-### 2. Install IPFS
-1. Install IPFS by Helm charts.
+1. Create a new kubernetes cluster in DigitalOcean, and Connect to the cluster.
+2. Install DigitalOcean loadbalancer and ingress-controller. Follow [Official Installation Guide](https://kubernetes.github.io/ingress-nginx/deploy/) for more information.
+   ```
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    helm repo update
+    kubectl create namespace ingress-nginx
+    helm upgrade ingress-nginx ingress-nginx/ingress-nginx -f ./values-ingress-nginx.yaml -n ingress-nginx --install
     ```
-    make deploy
-    ```
+3. Create auth secret for "ipfs-api" service. Check [Document](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/) for more information.
+   - Generate password file
+     `htpasswd -c auth ic3`
+   - Create secret in the kubernetes cluster.
+     ``kubectl create secret generic ipfs-auth --from-file=auth``
+4. Once the loadbalancer is created, setup DNS record, and point subdomain "ipfs" and "ipfs-api" to the IP of the loadbalancer.
+5. Install IPFS helm charts.
+   `make deploy`
 ## IPFS Usage
 ### IPFS gateway
 1. IPFS gateway is a public service for everyone is accessible. Here is the [Reference](https://docs.ipfs.tech/reference/http/gateway/#trusted-vs-trustless).
 ### IPFS API
 1. IPFS API does not expose to public world. We can only access the service through private network. Here is the [Reference](https://docs.ipfs.tech/reference/kubo/rpc/)
-### Local Development
-1. Connect to k8s Cluster.
-2. Use port-forward to connect the ipfs api service.
-   ```
-   kubectl port-forward svc/ipfs-ipfs 5001:5001
-   ```
-3. Start developing your app.
-### Prod Env
-1. Setup app env using internal ip: `http://ipfs-ipfs:5001`

@@ -1,39 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ipfs-ingress
+  name: ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  {{- if eq .Values.env "production" }}
   tls:
     - hosts:
-      - ipfs.murmurations.network
-      secretName: murmurations-ipfs-tls
-  {{- else if eq .Values.env "staging" }}
-  tls:
-    - hosts:
-        - test-ipfs.murmurations.network
-      secretName: murmurations-ipfs-tls
-  {{- else }}
-  tls:
-    - hosts:
-        - pretest-ipfs.murmurations.network
-      secretName: murmurations-ipfs-tls
-  {{- end }}
+        - ipfs.ic3.dev
+      secretName: ic3-ipfs-tls
   rules:
-    {{- if eq .Values.env "production" }}
-    - host: ipfs.murmurations.network
-    {{- else if eq .Values.env "staging" }}
-    - host: test-ipfs.murmurations.network
-    {{- else }}
-    - host: pretest-ipfs.murmurations.network
-    {{- end }}
+    - host: ipfs.ic3.dev
       http:
         paths:
-          - pathType: Prefix
-            path: "/"
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: ipfs-ipfs
