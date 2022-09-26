@@ -8,13 +8,25 @@
     kubectl create namespace ingress-nginx
     helm upgrade ingress-nginx ingress-nginx/ingress-nginx -f ./values-ingress-nginx.yaml -n ingress-nginx --install
     ```
-3. Create auth secret for "ipfs-api" service. Check [Document](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/) for more information.
+3. Install Cert-manager.
+   ```
+   kubectl create namespace cert-manager
+   helm repo add jetstack https://charts.jetstack.io
+   helm repo update
+   helm install \
+   cert-manager jetstack/cert-manager \
+   --namespace cert-manager \
+   --create-namespace \
+   --version v1.9.1 \
+   --set installCRDs=true
+   ```
+4. Create auth secret for "ipfs-api" service. Check [Document](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/) for more information.
    - Generate password file
      `htpasswd -c auth ic3`
    - Create secret in the kubernetes cluster.
-     ``kubectl create secret generic ipfs-auth --from-file=auth``
-4. Once the loadbalancer is created, setup DNS record, and point subdomain "ipfs" and "ipfs-api" to the IP of the loadbalancer.
-5. Install IPFS helm charts.
+     `kubectl create secret generic ipfs-auth --from-file=auth`
+5. Once the loadbalancer is created, setup DNS record, and point subdomain "ipfs" and "ipfs-api" to the IP of the loadbalancer.
+6. Install IPFS helm charts.
    `make deploy`
 ## IPFS Usage
 ### IPFS gateway
