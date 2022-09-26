@@ -6,7 +6,4 @@ else ifeq ($(ENV), staging)
 endif
 
 deploy:
-	helm upgrade ipfs-ingress ./ingress --set env=$(ENV) --install --atomic
-
-deploy-ipfs:
-	helm upgrade ipfs ./ipfs --install --atomic
+	helm upgrade ipfs ./ipfs --set env=$(ENV) --install --atomic

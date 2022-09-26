@@ -5,13 +5,8 @@
 ### 2. Install IPFS
 1. Install IPFS by Helm charts.
     ```
-    make deploy-ipfs
+    make deploy
     ```
-### 3. Install IPFS ingress
-1. Install ipfs-ingress by Helm charts.
-   ```
-   make deploy
-   ```
 ## IPFS Usage
 ### IPFS gateway
 1. IPFS gateway is a public service for everyone is accessible. Here is the [Reference](https://docs.ipfs.tech/reference/http/gateway/#trusted-vs-trustless).

@@ -1,3 +1,5 @@
+env: ""
+
 replicaCount: 1
 
 image: ipfs/go-ipfs:latest
